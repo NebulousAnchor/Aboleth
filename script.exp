@@ -1,0 +1,22 @@
+#!/usr/bin/expect -f
+
+set timeout -1
+spawn /tmp/mytest/openvpn-install.sh
+match_max 100000
+expect -exact "Public IPv4 address / hostname \[52.90.1.38\]: "
+send -- "\r"
+expect -exact "Protocol \[1\]: "
+send -- "\r"
+expect -exact "Port \[1194\]: "
+send -- "11443\r"
+expect -exact "DNS server \[1\]: "
+send -- "2\r"
+expect -exact "Name \[client\]: "
+send -- "ubunut"
+expect -exact " "
+send -- ""
+expect -exact " "
+send -- "tu_arm\r"
+expect -exact "Press any key to continue..."
+send -- "\r"
+expect eof
