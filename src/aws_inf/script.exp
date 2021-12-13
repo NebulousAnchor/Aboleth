@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 
 set timeout -1
-spawn /tmp/mytest/openvpn-install.sh
+spawn /tmp/d2/openvpn-install.sh
 match_max 100000
 expect -exact "Public IPv4 address / hostname \[52.90.1.38\]: "
 send -- "\r"

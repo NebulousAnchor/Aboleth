@@ -50,6 +50,7 @@ RUN pip3 install -r requirements.txt
 RUN python3 -m pip install --upgrade pip
 RUN curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
 RUN su-exec session-manager-plugin.deb
+RUN chmod +x auto_gather.sh
 
 
 CMD ["/bin/bash"]
