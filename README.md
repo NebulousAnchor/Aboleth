@@ -45,7 +45,7 @@ From the Docker bash prompt:
     * Run Campaign
 
 * To Access shell on each box use the instance ID and SSM from the docker bash prompt:
-    * `aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`].Value[]]' --output text` Output current instances with names
+    * `aws ec2 describe-instances --filters Name=tag:{KEY},Values={Value} --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`]| [0].Value]' --output text` Output current instances with names
     * `aws ssm start-session --target i-xxxxxxxxx` remote session for shell access
 
 ## Known Challenges/Need to do:

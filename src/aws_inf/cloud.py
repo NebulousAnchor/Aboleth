@@ -16,6 +16,9 @@ print("The external IP of this machine is: " + extIP + "/32")
 kitIP = input("What is the IP you will VPN from?(CIDR notation) ")
 custSubnets = int(input("How many external subnets does the customer have? (Max 15) "))
 custIP = [input('What is the first customer subnet?(In CIDR notation) ')]
+sName = input("What would you like to call this Stack? ")
+tagKey = input("Please name a Tag KEY:  ")
+tagVal = input("Please name a Tag VALUE for the Key created: ")
 
 if custSubnets >= 2 <=15:
 	for i in range(custSubnets-1):
@@ -31,15 +34,44 @@ with open("./app.py", "r+") as f:
 	for (i, line) in enumerate(app):
 		if lookup in line:
 			lineNum = i+1
-	vpnSGrule = "        Redirect_SG.add_ingress_rule(ec2.Peer.ipv4('" + kitIP + "'), ec2.Port.udp(11443), 'allow VPN traffic from your IP ')\n"
+	vpnSGrule = "        Redirect_SG.add_ingress_rule(ec2.Peer.ipv4('" + kitIP + "'), ec2.Port.all_traffic(), 'allow ALL Inbound traffic from your IP ')\n"
 	app[lineNum] = vpnSGrule
 	lineNum = lineNum+1
 	for i in range(custSubnets):
 		line = int(lineNum + i)
 		app[line] = "        Redirect_SG.add_ingress_rule(ec2.Peer.ipv4('" + str(custIP[i]) + "'), ec2.Port.all_traffic(), 'allow ALL Inbound traffic from Customer Subnet')\n"
+	lineNum = 0
+	lookup = "stackName = "
+	for (i, line) in enumerate(app):
+		if lookup in line:
+			lineNum = i
+	stackName = "stackName = 'Mission-Kit-" + sName + "'\n"
+	app[lineNum] = stackName
+	lineNum = 0
+	lookup = "tagKey = "
+	for (i, line) in enumerate(app):
+		if lookup in line:
+			lineNum = i
+	app[lineNum] = "tagKey = '" + tagKey + "'\n"
+	lineNum = 0
+	lookup = "tagVal = "
+	for (i, line) in enumerate(app):
+		if lookup in line:
+			lineNum = i
+	app[lineNum] = "tagVal = '" + tagVal + "'\n"
+
 
 with open("./app.py", "w") as f:
 	f.writelines(app)
+
+with open("./auto_gather.sh", "r+") as f:
+	auto = f.readlines()
+	lineNum = 3
+	stackName2 = "stackName='Mission-Kit-" +sName + "'\n"
+	auto[lineNum] = stackName2
+
+with open("./auto_gather.sh", "w") as f:
+	f.writelines(auto)
 
 os.system('cdk deploy')
 

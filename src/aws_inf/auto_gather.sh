@@ -1,7 +1,9 @@
 #!/bin/bash
 
-GoPhish=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`].Value[]]' --output text | grep -B 1 'Domain-1-Go-Phish'| grep 'i-')
-Redirector=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`].Value[]]' --output text | grep -B 1 'Domain-2-Redirector' | grep 'i-')
+stackName = 'Mission-Kit-Fumous'
+
+GoPhish=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`].Value[]]' --output text | grep -B 1 $stackName/'Domain-1-Go-Phish'| grep 'i-')
+Redirector=$(aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`].Value[]]' --output text | grep -B 1 $stackName/'Domain-2-Redirector' | grep 'i-')
 
 aws ec2 get-console-output  --instance-id $GoPhish --latest --output text > /tmp/d1.txt
 aws ec2 get-console-output  --instance-id $Redirector --latest --output text > /tmp/d2.txt 
