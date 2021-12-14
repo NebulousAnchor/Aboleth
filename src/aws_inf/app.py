@@ -49,8 +49,8 @@ class EC2InstanceStack(core.Stack):
         
         Redirect_SG.add_ingress_rule(ec2.Peer.ipv4('10.0.8.101/32'), ec2.Port.all_traffic(), 'allow ALL Inbound traffic from Peer (Domain-1-Go-Phish)')
         #automated rules go here
-        
-
+        Redirect_SG.add_ingress_rule(ec2.Peer.ipv4('174.202.6.134/32'), ec2.Port.all_traffic(), 'allow ALL Inbound traffic from your IP ')
+        Redirect_SG.add_ingress_rule(ec2.Peer.ipv4('174.202.6.0/24'), ec2.Port.all_traffic(), 'allow ALL Inbound traffic from Customer Subnet')
 
 
 
@@ -86,11 +86,13 @@ class EC2InstanceStack(core.Stack):
             user_data = ec2.UserData.custom(user_data2),
             private_ip_address='10.0.8.102',
             )
+
+tagKey = 'Operation'
+tagVal = 'Fumous'
         
 app = core.App()
-secret = secrets.token_hex(16)
-stackName = "Mission-kit-" + str(secret)
-EC2InstanceStack(app, stackName)
-
+stackName = 'Mission-Kit-Fumous'
+EC2InstanceStack(app, stackName )
+core.Tags.of(app).add(tagKey, tagVal)
 app.synth()
 

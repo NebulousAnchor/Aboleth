@@ -1,7 +1,7 @@
 AWS CLI Commands to know
 
 # Output current instances with names
-aws ec2 describe-instances --filters Name=instance-state-name,Values=running --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`].Value[]]' --output text
+aws ec2 describe-instances --filters Name=tag:{KEY},Values={Value} --query 'Reservations[].Instances[].[InstanceId, Tags[?Key==`Name`]| [0].Value]' --output text
 
 # Start SSM session with instance, where i-xxxxxxx == instance id
 aws ssm start-session --target i-xxxxxxxx
