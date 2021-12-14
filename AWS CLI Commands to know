@@ -5,3 +5,6 @@ aws ec2 describe-instances --filters Name=tag:{KEY},Values={Value} --query 'Rese
 
 # Start SSM session with instance, where i-xxxxxxx == instance id
 aws ssm start-session --target i-xxxxxxxx
+
+# Delete Stack (careful provides no warning or feedback)
+aws cloudformation delete-stack --stack-name
