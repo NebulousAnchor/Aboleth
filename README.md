@@ -2,7 +2,7 @@
 ![alt text](https://github.com/NebulousAnchor/Aboleth/blob/main/Intended_Build.jpg)
 
 
-# Assess Mission Cloud Services
+# AWS Phishing and Pentest Redirect Cloud Services
 
 ## GOAL:  
 
@@ -25,7 +25,6 @@
 * ASSUMPTION: You have 
     * AWS Account
     * User with Secret ID and Secret Key ` Go to IAM -> Users in AWS Console and generate user with application credentials`
-    * S3 Bucket that is publicly avaliable to the instance to host `script.exp` and it is there.
     * Docker installed and running
 
 * Git clone repository
