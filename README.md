@@ -27,7 +27,10 @@
     * User with Secret ID and Secret Key ` Go to IAM -> Users in AWS Console and generate user with application credentials`
     * Docker installed and running
 
-* Git clone repository
+* NOW ON DOCKER HUB
+* RUN: `docker pull nebulousanchor/aboleth`
+
+* Git clone repository and custom build Docker
 * RUN: `docker build -t aboleth/aws_inf ./`
 * RUN: `docker run --rm -it aboleth/aws_inf`
 
